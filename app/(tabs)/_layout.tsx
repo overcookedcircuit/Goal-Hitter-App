@@ -1,35 +1,164 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import { BarChart2, Calendar, Home, Settings, Target } from "lucide-react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Colors } from "../../constants/colors";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+interface TabIconProps {
+  icon: React.ReactNode;
+  label: string;
+  focused: boolean;
+}
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+function TabIcon({ icon, label, focused }: TabIconProps) {
+  return (
+    <View style={styles.tabItem}>
+      <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+        {icon}
+      </View>
+      <Text style={[styles.label, focused && styles.labelActive]}>
+        {label}
+      </Text>
+    </View>
+  );
+}
 
+export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarShowLabel: false,
+        tabBarStyle: styles.tabBar,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              icon={
+                <Home
+                  size={20}
+                  color={focused ? Colors.primary : Colors.tabBar.inactive}
+                  strokeWidth={focused ? 2.2 : 1.8}
+                />
+              }
+              label="Home"
+              focused={focused}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="goals"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              icon={
+                <Target
+                  size={20}
+                  color={focused ? Colors.primary : Colors.tabBar.inactive}
+                  strokeWidth={focused ? 2.2 : 1.8}
+                />
+              }
+              label="Goals"
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              icon={
+                <Calendar
+                  size={20}
+                  color={focused ? Colors.primary : Colors.tabBar.inactive}
+                  strokeWidth={focused ? 2.2 : 1.8}
+                />
+              }
+              label="Calendar"
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="progress"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              icon={
+                <BarChart2
+                  size={20}
+                  color={focused ? Colors.primary : Colors.tabBar.inactive}
+                  strokeWidth={focused ? 2.2 : 1.8}
+                />
+              }
+              label="Progress"
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              icon={
+                <Settings
+                  size={20}
+                  color={focused ? Colors.primary : Colors.tabBar.inactive}
+                  strokeWidth={focused ? 2.2 : 1.8}
+                />
+              }
+              label="Settings"
+              focused={focused}
+            />
+          ),
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: Colors.tabBar.background,
+    borderTopColor: Colors.tabBar.border,
+    borderTopWidth: 1,
+    height: 80,
+    paddingBottom: 8,
+    paddingTop: 8,
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  tabItem: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    paddingTop: 2,
+  },
+  iconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconWrapActive: {
+    backgroundColor: Colors.primaryLight,
+  },
+  label: {
+    fontSize: 11,
+    color: Colors.tabBar.inactive,
+    fontWeight: "400",
+  },
+  labelActive: {
+    color: Colors.primary,
+    fontWeight: "600",
+  },
+});
