@@ -15,7 +15,7 @@ function TabIcon({ icon, label, focused }: TabIconProps) {
       <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
         {icon}
       </View>
-      <Text style={[styles.label, focused && styles.labelActive]}>
+      <Text style={[styles.label, focused && styles.labelActive]} numberOfLines={1}>
         {label}
       </Text>
     </View>
@@ -130,22 +130,22 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.tabBar.background,
     borderTopColor: Colors.tabBar.border,
     borderTopWidth: 1,
-    height: 80,
+    height: 65,
     paddingBottom: 8,
-    paddingTop: 8,
+    paddingTop: 6,
     elevation: 0,
     shadowOpacity: 0,
   },
   tabItem: {
     alignItems: "center",
     justifyContent: "center",
-    gap: 4,
-    paddingTop: 2,
+    gap: 3,
+    paddingTop: 4,
   },
   iconWrap: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -153,9 +153,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryLight,
   },
   label: {
-    fontSize: 11,
+    fontSize: 10,
     color: Colors.tabBar.inactive,
     fontWeight: "400",
+    letterSpacing: -0.3,
+    minWidth: 60,
+    textAlign: "center",
   },
   labelActive: {
     color: Colors.primary,

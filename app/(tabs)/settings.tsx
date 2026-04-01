@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../constants/colors";
 import { MOCK_USER } from "../../constants/mockData";
+import { supabase } from "../../lib/supabase";
 
 export default function SettingsScreen() {
   const [darkMode, setDarkMode] = useState(false);
@@ -93,7 +94,13 @@ export default function SettingsScreen() {
         </View>
 
         {/* Sign Out */}
-        <TouchableOpacity style={styles.signOutBtn} activeOpacity={0.75}>
+        <TouchableOpacity 
+          style={styles.signOutBtn} 
+          activeOpacity={0.75}
+          onPress={async () => {
+            await supabase.auth.signOut();
+          }}
+        >
           <LogOut size={18} color="#EF5350" strokeWidth={1.8} />
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
